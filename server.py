@@ -22,14 +22,14 @@ class Server():
 	def set_application(self, app, port):
 		self.application = app
 		app.listen(port)
-		print "Listening on port " + str(port)
+		print "Listening on port {}".format(port)
 		self.start()
 
 	def init_state(self):
 		return dict(type="init")
 
 	def on_message(self, id, message):
-		pass
+		print "[{}] {}]".format(id, message)
 
 	def on_open(self, id):
 		pass
@@ -41,8 +41,8 @@ class Server():
 		self.ioloop.add_timeout(time.time() + seconds, callback)
 
 	def broadcast(self, msg):
-		for c in self.clients.items():
-			c[1].write_message(msg)
+		for client in self.clients.values():
+			client.write_message(msg)
 
 	def whisper(self, id, msg):
 		self.clients[id].write_message(msg)
