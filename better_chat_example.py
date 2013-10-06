@@ -6,8 +6,11 @@ SET_USERNAME = "#name"
 GET_USERS = "#users"
 MESSAGE = "#chat"
 
-def set_guest(id):
+def on_connect(id):
 	users[id] = "Guest"
+
+def on_disconnect(id):
+	del users[id]
 
 def set_username(id, data):
 	users[id] = data[0]
@@ -29,7 +32,8 @@ def message(id, data):
 
 wss = WebSocketServer(r"/ws", 8899, protocol=ServerProtocol.SEPERATOR("|"))
 wss.add_event_listeners([
-	(ServerEvent.ON_CONNECT, set_guest),
+	(ServerEvent.ON_CONNECT, on_connect),
+	(ServerEvent.ON_DISCONNECT, on_disconnect),
 	(SET_USERNAME, set_username),
 	(GET_USERS, get_users),
 	(MESSAGE, message),
