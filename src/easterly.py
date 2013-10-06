@@ -67,7 +67,7 @@ class WebSocketServer():
 		signal.signal(signal.SIGINT, self._sigint)
 
 	def _sigint(self, signal, frame):
-			self.stop()
+		self.stop()
 
 	'''
 	User Event Setters
