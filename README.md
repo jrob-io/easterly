@@ -4,6 +4,19 @@ easterly
 
 **easterly** is a simple event-based WebSocket server built on top of Tornado.
 
+Sample usage:
+````python
+# Simple echo server
+from easterly import WebSocketServer, ServerEvent
+
+def on_message(id, message):
+	wss.whisper(id, message)
+
+wss = WebSocketServer(r"/ws", 8899)
+wss.add_event_listener(ServerEvent.ON_MESSAGE, on_message)
+wss.start()
+````
+
 Some Documentation
 -------------
 *WebSocketServer*.**add_event_listener**(event, callback)
@@ -35,17 +48,6 @@ Some Documentation
 
 Examples
 --------
-### Echo Server
-````python
-from easterly import WebSocketServer, ServerEvent
-
-def on_message(id, message):
-	wss.whisper(id, message)
-
-wss = WebSocketServer(r"/ws", 8899)
-wss.add_event_listener(ServerEvent.ON_MESSAGE, on_message)
-wss.start()
-````
 
 ### Basic Chat Server
 A basic chat server that echos incoming messages to all connections.
